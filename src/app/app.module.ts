@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from './layout/layout.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    LayoutModule,
+    ProjectsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
