@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Project 1 title",
+      "subtitle": "Project subtitle",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+      "boundaries": [100, 100, 150, 150]
+    },
+    {
+      "id": 2,
+      "title": "Project 2 title",
+      "subtitle": "Project subtitle",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+      "boundaries": [100, 100, 150, 150]
+    },
+    {
+      "id": 3,
+      "title": "Project 3 title",
+      "subtitle": "Project subtitle",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+      "boundaries": [100, 100, 150, 150]
+    }
+  ]
+}
