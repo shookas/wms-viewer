@@ -1,9 +1,11 @@
+import { LatLngBounds } from "leaflet";
+
 export interface Project {
   id: number;
   title: string;
   subtitle: string;
   description: string;
-  boundaries: [number, number, number, number];
+  bounds?: LatLngBounds;
 }
 
 export interface ProjectsApi {
