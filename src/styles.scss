@@ -18,8 +18,18 @@ $theme: mat-light-theme($primary, $accent, $warn);
 body {
   font-family: mat-font-family($config);
   font-weight: normal;
+  margin: 0px;
 }
 
 h1, h2, h3, h4 {
   font-weight: normal;
+}
+
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  & .main-content {
+    flex: 1;
+  }
 }

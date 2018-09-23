@@ -1,3 +1,4 @@
+import { DataService } from './../../core/data.service';
 import { ApiService } from './../../core/api.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Project } from '../../models/api.models';
@@ -10,17 +11,25 @@ import { Subscription } from 'rxjs';
 })
 export class ProjectsContainerComponent implements OnInit, OnDestroy {
   projects: Project[];
-  substription: Subscription;
-
-  constructor(private apiService: ApiService) {}
+  private apiSubscription: Subscription;
+  private projectsSubscription: Subscription;
+  constructor(
+    private apiService: ApiService,
+    private dataService: DataService
+  ) {}
 
   ngOnInit() {
-    this.substription = this.apiService
+    this.apiSubscription = this.apiService
       .getProjects()
-      .subscribe(response => (this.projects = response.data));
+      .subscribe(response => this.dataService.projects.next(response.data));
+
+    this.projectsSubscription = this.dataService.projects.subscribe(
+      projects => (this.projects = projects)
+    );
   }
 
   ngOnDestroy() {
-    this.substription.unsubscribe();
+    this.apiSubscription.unsubscribe();
+    this.projectsSubscription.unsubscribe();
   }
 }

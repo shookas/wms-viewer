@@ -1,3 +1,4 @@
+import { MapViewerModule } from './map-viewer/map-viewer.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,6 +23,7 @@ import { AppRouterModule } from './router.module';
     BrowserAnimationsModule,
     LayoutModule,
     ProjectsModule,
+    MapViewerModule,
     AppRouterModule
   ],
   providers: [],

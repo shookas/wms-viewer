@@ -1,6 +1,7 @@
 import { Project } from './../../models/api.models';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { map, tileLayer, Map } from 'leaflet';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-card',
@@ -16,7 +17,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   private poznanCords: [number, number] = [52.407838, 16.932936];
   private mapView: Map;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
   ngAfterViewInit() {
@@ -31,7 +32,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   onMapClick() {
-    console.log(this.project.id)
+    this.router.navigate(['maps', this.project.id]);
   }
 
   setHoverOnMap(value: boolean) {
