@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContainerComponent } from './container/container.component';
+import { ProjectsContainerComponent } from './container/container.component';
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { MatCardModule, MatButtonModule } from '@angular/material';
 
@@ -8,7 +8,7 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
   imports: [
     CommonModule, MatCardModule, MatButtonModule
   ],
-  declarations: [ContainerComponent, ProjectCardComponent],
-  exports: [ContainerComponent]
+  declarations: [ProjectsContainerComponent, ProjectCardComponent],
+  exports: [ProjectsContainerComponent]
 })
 export class ProjectsModule { }

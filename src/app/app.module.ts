@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from './layout/layout.module';
 import { ProjectsModule } from './projects/projects.module';
+import { AppRouterModule } from './router.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { ProjectsModule } from './projects/projects.module';
     FormsModule,
     BrowserAnimationsModule,
     LayoutModule,
-    ProjectsModule
+    ProjectsModule,
+    AppRouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

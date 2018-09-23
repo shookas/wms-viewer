@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss']
 })
-export class ContainerComponent implements OnInit, OnDestroy {
+export class ProjectsContainerComponent implements OnInit, OnDestroy {
   projects: Project[];
   substription: Subscription;
 
