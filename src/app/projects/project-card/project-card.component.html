@@ -1,11 +1,14 @@
-<mat-card class="project-card">
+<mat-card class="project-card"
+  [class.mat-elevation-z10]="hoverOnMap">
   <mat-card-header>
     <mat-card-title>{{project.title}}</mat-card-title>
     <mat-card-subtitle>{{project.subtitle}}</mat-card-subtitle>
   </mat-card-header>
   <div id="map-{{project.id}}"
     class="map-view"
-    (click)="onMapClick()"></div>
+    (click)="onMapClick()"
+    (mouseover)="setHoverOnMap(true)"
+    (mouseleave)="setHoverOnMap(false)"></div>
   <mat-card-content>
     <p>{{project.description}}</p>
   </mat-card-content>

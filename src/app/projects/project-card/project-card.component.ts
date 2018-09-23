@@ -11,8 +11,11 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input()
   project: Project;
 
+  hoverOnMap: boolean;
+
   private poznanCords: [number, number] = [52.407838, 16.932936];
   private mapView: Map;
+
   constructor() {}
 
   ngOnInit() {}
@@ -29,6 +32,10 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   onMapClick() {
     console.log(this.project.id)
+  }
+
+  setHoverOnMap(value: boolean) {
+    this.hoverOnMap = value;
   }
 
   private addLayersToMap() {
