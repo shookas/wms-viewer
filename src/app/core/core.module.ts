@@ -6,6 +6,5 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   declarations: [],
   exports: [],
-  providers: [ApiService]
 })
 export class CoreModule {}
