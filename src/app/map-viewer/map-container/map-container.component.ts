@@ -1,18 +1,19 @@
 import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
 import { Project } from './../../models/api.models';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Map, map, tileLayer } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map-container',
   templateUrl: './map-container.component.html',
   styleUrls: ['./map-container.component.scss']
 })
-export class MapContainerComponent implements OnInit, AfterViewInit {
-  project$: Observable<Project>;
+export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
+  projectSubscruption: Subscription;
+  project: Project;
   mapViewer: Map;
   constructor(
     private route: ActivatedRoute,
@@ -21,15 +22,16 @@ export class MapContainerComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.project$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.projectsService.getProject(params.get('id'))
+    this.projectSubscruption = this.route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) =>
+          this.projectsService.getProject(params.get('id'))
+        )
       )
-    );
-
-    this.project$.subscribe(project => {
-      console.log(project)
-    });
+      .subscribe(
+        project => (this.project = project),
+        () => this.router.navigate(['/projects'])
+      );
   }
 
   ngAfterViewInit() {
@@ -37,5 +39,9 @@ export class MapContainerComponent implements OnInit, AfterViewInit {
     tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(
       this.mapViewer
     );
+  }
+
+  ngOnDestroy() {
+    this.projectSubscruption.unsubscribe();
   }
 }
