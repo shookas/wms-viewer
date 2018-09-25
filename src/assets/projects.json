@@ -5,14 +5,19 @@
       "title": "Project 1 title",
       "subtitle": "Project subtitle",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-      "bounds": [[52.40, 16.93], [52.10, 16.23]]
+      "bounds": [
+        [52.37423901910504, 16.952936320211503],
+        [52.37955105766778, 16.962719690266617]
+      ],
+      "store": "http://88.198.175.167:8080/geoserver/rondo_zegrze/wms",
+      "layers": [{ "id": "20180914_zegrze", "name": "2018-09-14" }]
     },
     {
       "id": 2,
       "title": "Project 2 title",
       "subtitle": "Project subtitle",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-      "bounds": [[52.30, 16.93], [52.30, 16.23]]
+      "bounds": [[52.3, 16.93], [52.3, 16.23]]
     },
     {
       "id": 3,
