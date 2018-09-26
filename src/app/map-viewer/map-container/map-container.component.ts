@@ -2,9 +2,10 @@ import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
 import { Project } from './../../models/api.models';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Map, map, tileLayer, control } from 'leaflet';
+import { Map, map, tileLayer, control, Control } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import 'leaflet-measure/dist/leaflet-measure.pl.js';
 
 @Component({
   selector: 'app-map-container',
@@ -13,7 +14,9 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   projectSubscruption: Subscription;
-  readonly osm = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+  readonly osm = tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+  );
   project: Project;
   mapViewer: Map;
   constructor(
@@ -54,6 +57,31 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mapViewer = map('map', {
       layers: [this.osm]
     });
+    const measureControl = (control as any).measure({
+      primaryLengthUnit: 'metry',
+      secondaryLengthUnit: undefined,
+      primaryAreaUnit: 'hektary',
+      secondaryAreaUnit: undefined,
+      activeColor: '#ABE67E',
+      completedColor: '#C8F2BE',
+      units: {
+        metry: {
+          factor: 1,
+          display: 'metry',
+          decimals: 2
+        },
+        hektary: {
+          factor: 0.0001,
+          display: 'hektary',
+          decimals: 2
+        }
+      },
+      popupOptions: {
+        className: 'leaflet-measure-resultpopup',
+        autoPanPadding: [10, 10]
+      }
+    });
+    measureControl.addTo(this.mapViewer);
   }
 
   private prepareProjectMap() {
@@ -64,8 +92,8 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   private addLayers() {
     const baseLayers = {
-      "Open Street Map": this.osm
-    }
+      'Open Street Map': this.osm
+    };
     const projectLayers = this.project.layers.reduce((obj, curr) => {
       obj[curr.name] = tileLayer.wms(this.project.store, {
         layers: curr.id,
@@ -73,7 +101,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
         format: 'image/png'
       });
       return obj;
-    }, {})
+    }, {});
 
     control.layers(baseLayers, projectLayers).addTo(this.mapViewer);
   }
