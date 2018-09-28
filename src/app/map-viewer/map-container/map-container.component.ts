@@ -47,6 +47,9 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(
         project => {
           this.project = project;
+          if (!this.mapViewer) {
+            this.prepareMap();
+          };
           this.prepareProjectMap();
         },
         () => this.router.navigate(['/projects'])
@@ -54,6 +57,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private prepareMap() {
+    if (this.mapViewer) return;
     this.mapViewer = map('map', {
       layers: [this.osm]
     });
