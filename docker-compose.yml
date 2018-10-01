@@ -1,0 +1,7 @@
+version: '2.0'
+
+services:
+  app:
+    image: 'shookas/wms-viewer'
+    ports:
+      - 3000:80

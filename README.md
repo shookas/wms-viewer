@@ -14,6 +14,26 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+## Build and publish docker image
+
+To build docker image use 
+
+`docker build -t shookas/wms-viewer:<version>`
+
+To publish image
+
+`docker push shookas/wms-viewer:<version>`
+
+## Run docker image 
+
+Run from docker imgae 
+
+`docker run -d -p <port>:80 shookas/wms-viewer:latest`
+
+Run docker imgages from docker-compose.yml file
+
+`docker-compose up -d`
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
