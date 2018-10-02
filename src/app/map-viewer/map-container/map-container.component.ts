@@ -2,9 +2,9 @@ import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
 import { Project } from './../../models/api.models';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Map, map, tileLayer, control } from 'leaflet';
+import { Map, map, tileLayer, control, LeafletEvent } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, Subject, BehaviorSubject } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
 
 @Component({
@@ -14,8 +14,10 @@ import 'leaflet-measure/dist/leaflet-measure.pl.js';
 })
 export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   projectSubscruption: Subscription;
+  loadingLayers = {};
   readonly osm = tileLayer(
-    'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+    {
       maxZoom: 20
     }
   );
@@ -37,6 +39,10 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.projectSubscruption.unsubscribe();
+  }
+
+  isLoadingLayers() {
+    return Object.values(this.loadingLayers).some(loading => !!loading);
   }
 
   private loadProject() {
@@ -103,15 +109,22 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       'Open Street Map': this.osm
     };
     const projectLayers = this.project.layers.reduce((obj, curr) => {
-      obj[curr.name] = tileLayer.wms(this.project.store, {
-        layers: curr.id,
-        transparent: true,
-        format: 'image/png',
-        maxZoom: 20
-      });
+      obj[curr.name] = tileLayer
+        .wms(this.project.store, {
+          layers: curr.id,
+          transparent: true,
+          format: 'image/png',
+          maxZoom: 20
+        })
+        .addEventListener('load', this.setLoadingLayer.bind(this, false))
+        .addEventListener('add', this.setLoadingLayer.bind(this, true))
+        .addEventListener('remove', this.setLoadingLayer.bind(this, false));
       return obj;
     }, {});
-
     control.layers(baseLayers, projectLayers).addTo(this.mapViewer);
+  }
+
+  private setLoadingLayer(loading: boolean, event: LeafletEvent) {
+    this.loadingLayers[event.target.options.layers] = loading;
   }
 }
