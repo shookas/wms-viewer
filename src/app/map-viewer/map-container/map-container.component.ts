@@ -2,9 +2,9 @@ import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
 import { Project } from './../../models/api.models';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Map, map, tileLayer, control, Control } from 'leaflet';
+import { Map, map, tileLayer, control } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
 
 @Component({
@@ -15,7 +15,9 @@ import 'leaflet-measure/dist/leaflet-measure.pl.js';
 export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   projectSubscruption: Subscription;
   readonly osm = tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+      maxZoom: 20
+    }
   );
   project: Project;
   mapViewer: Map;
@@ -49,7 +51,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
           this.project = project;
           if (!this.mapViewer) {
             this.prepareMap();
-          };
+          }
           this.prepareProjectMap();
         },
         () => this.router.navigate(['/projects'])
@@ -59,15 +61,16 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   private prepareMap() {
     if (this.mapViewer) return;
     this.mapViewer = map('map', {
-      layers: [this.osm]
+      layers: [this.osm],
+      maxZoom: 20
     });
     const measureControl = (control as any).measure({
       primaryLengthUnit: 'metry',
       secondaryLengthUnit: undefined,
       primaryAreaUnit: 'hektary',
       secondaryAreaUnit: undefined,
-      activeColor: '#ABE67E',
-      completedColor: '#C8F2BE',
+      activeColor: '#a50e0e',
+      completedColor: '#a50e0e',
       units: {
         metry: {
           factor: 1,
@@ -94,6 +97,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.addLayers();
   }
+
   private addLayers() {
     const baseLayers = {
       'Open Street Map': this.osm
@@ -102,7 +106,8 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       obj[curr.name] = tileLayer.wms(this.project.store, {
         layers: curr.id,
         transparent: true,
-        format: 'image/png'
+        format: 'image/png',
+        maxZoom: 20
       });
       return obj;
     }, {});
