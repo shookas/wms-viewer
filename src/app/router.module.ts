@@ -2,10 +2,14 @@ import { ProjectsContainerComponent } from './projects/container/container.compo
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MapContainerComponent } from './map-viewer/map-container/map-container.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 const appRoutes: Routes = [
   { path: 'projects', component: ProjectsContainerComponent },
-  { path: 'maps/:id', component: MapContainerComponent },
+  { path: 'projects/:id', component: MapContainerComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: '',
     redirectTo: '/projects',

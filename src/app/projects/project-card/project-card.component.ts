@@ -32,7 +32,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   onMapClick() {
-    this.router.navigate(['maps', this.project.id]);
+    this.router.navigate(['projects', this.project.id]);
   }
 
   setHoverOnMap(value: boolean) {

@@ -1,0 +1,34 @@
+<div>
+  <mat-card>
+    <div>Login</div>
+    <form (ngSubmit)="onSubmit()"
+      [formGroup]="loginForm">
+
+      <mat-form-field class="full-width">
+        <input formControlName="username"
+          matInput
+          placeholder="Email"
+          [autofocus]="true">
+        <mat-error>
+          <span *ngIf="!loginForm.get('username').valid">Wprowadź poprawny email</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input formControlName="password"
+          type="password"
+          matInput
+          placeholder="Password"
+          name="password">
+        <mat-error>
+          <span *ngIf="!loginForm.get('password').valid">Wprowadź hasło</span>
+        </mat-error>
+      </mat-form-field>
+
+      <div>
+        <button mat-raised-button
+          [disabled]="!loginForm.valid">Submit</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
