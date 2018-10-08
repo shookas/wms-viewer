@@ -4,12 +4,13 @@
 
 @include mat-core();
 
+$top-margin-card: 50px;
+
 $primary: mat-palette($mat-lime, 500);
-$accent:  mat-palette($mat-lime, 500, A200, A400);
-$warn:    mat-palette($mat-red, 500);
+$accent: mat-palette($mat-lime, 500, A200, A400);
+$warn: mat-palette($mat-red, 500);
 
 $config: mat-typography-config();
-
 
 $theme: mat-light-theme($primary, $accent, $warn);
 
@@ -21,7 +22,10 @@ body {
   margin: 0px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-weight: normal;
 }
 
@@ -31,5 +35,21 @@ h1, h2, h3, h4 {
   flex-direction: column;
   & .main-content {
     flex: 1;
+  }
+}
+
+.form-card {
+  margin: auto;
+  margin-top: $top-margin-card;
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+  &--centered {
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
   }
 }

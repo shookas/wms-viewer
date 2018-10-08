@@ -1,34 +1,38 @@
 <div>
-  <mat-card>
-    <div>Login</div>
+  <mat-card class="form-card login-card">
     <form (ngSubmit)="onSubmit()"
       [formGroup]="loginForm">
+      <mat-card-header>
+        <div>Login</div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <input formControlName="username"
+            matInput
+            placeholder="Email"
+            [autofocus]="true">
+          <mat-error>
+            <span *ngIf="!loginForm.get('username').valid">Wprowadź poprawny email</span>
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <input formControlName="username"
-          matInput
-          placeholder="Email"
-          [autofocus]="true">
-        <mat-error>
-          <span *ngIf="!loginForm.get('username').valid">Wprowadź poprawny email</span>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <input formControlName="password"
-          type="password"
-          matInput
-          placeholder="Password"
-          name="password">
-        <mat-error>
-          <span *ngIf="!loginForm.get('password').valid">Wprowadź hasło</span>
-        </mat-error>
-      </mat-form-field>
-
-      <div>
+        <mat-form-field class="full-width">
+          <input formControlName="password"
+            type="password"
+            matInput
+            placeholder="Hasło"
+            name="password">
+          <mat-error>
+            <span *ngIf="!loginForm.get('password').valid">Wprowadź hasło</span>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-spinner class="spinner spinner--centered"
+        *ngIf="isLoading"></mat-spinner>
+      <mat-card-actions>
         <button mat-raised-button
-          [disabled]="!loginForm.valid">Submit</button>
-      </div>
+          [disabled]="!loginForm.valid">Wyślij</button>
+      </mat-card-actions>
     </form>
   </mat-card>
 </div>

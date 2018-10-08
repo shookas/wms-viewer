@@ -18,3 +18,24 @@ export interface Layer {
 export interface ProjectsApi {
   data: Project[];
 }
+
+export interface User {
+  _id: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  id: string;
+}
+
+export interface UserResp extends RootObject {
+  user: User;
+}
+
+export interface RootObject {
+  message?: string;
+  error?: string;
+  token?: string;
+  success: boolean;
+}
