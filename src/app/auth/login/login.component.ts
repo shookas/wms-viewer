@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
     if (username && password) {
       this.authSerive.login(username, password).subscribe(res => {
-        console.log(res);
+        console.log(this.authSerive.isLoggedIn());
       });
     }
   }

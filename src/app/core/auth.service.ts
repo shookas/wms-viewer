@@ -26,8 +26,8 @@ export class AuthService {
     const token = localStorage.getItem(TOKEN_NAME);
     const decoded: any = jwt_decode(token);
     if (decoded.exp === undefined) return null;
-    const expiresAt = JSON.parse(decoded.exp);
-    return moment(expiresAt);
+
+    return moment.unix(decoded.exp);
   }
 
   logout() {
