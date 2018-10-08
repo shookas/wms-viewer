@@ -22,9 +22,12 @@ export class AuthService {
     );
   }
 
+  getToken() {
+    return localStorage.getItem(TOKEN_NAME);
+  }
+
   getTokenExpiration(): moment.Moment {
-    const token = localStorage.getItem(TOKEN_NAME);
-    const decoded: any = jwt_decode(token);
+    const decoded: any = jwt_decode(this.getToken());
     if (decoded.exp === undefined) return null;
 
     return moment.unix(decoded.exp);
