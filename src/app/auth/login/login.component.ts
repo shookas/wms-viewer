@@ -40,9 +40,7 @@ export class LoginComponent implements OnInit {
       this.authSerive
         .login(username, password)
         .pipe(catchError(err => of(this.handleErrors(err))))
-        .subscribe(res => {
-          console.log(this.authSerive.isLoggedIn());
-        });
+        .subscribe();
     }
   }
 
