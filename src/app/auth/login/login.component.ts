@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { NotifyService } from '../../core/notify.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface UserLoginInfo {
   unique: string;
@@ -24,7 +28,7 @@ export class LoginComponent implements OnInit {
     ])
   });
 
-  constructor(private authSerive: AuthService) {}
+  constructor(private authSerive: AuthService, private notify: NotifyService) {}
 
   ngOnInit() {}
 
@@ -33,9 +37,29 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
 
     if (username && password) {
-      this.authSerive.login(username, password).subscribe(res => {
-        console.log(this.authSerive.isLoggedIn());
-      });
+      this.authSerive
+        .login(username, password)
+        .pipe(catchError(err => of(this.handleErrors(err))))
+        .subscribe(res => {
+          console.log(this.authSerive.isLoggedIn());
+        });
     }
+  }
+
+  private handleErrors(err) {
+    switch (err.status) {
+      case 422:
+        const message = this.parseMessage(err.error.error);
+        this.notify.showError(message);
+        break;
+      default:
+        throw new HttpErrorResponse(err);
+    }
+  }
+
+  private parseMessage(message: string): string {
+    return message.includes('password')
+      ? 'Nieprawidłowe hasło'
+      : 'Błędny login';
   }
 }
