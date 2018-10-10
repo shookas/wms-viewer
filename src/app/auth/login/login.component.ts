@@ -5,6 +5,7 @@ import { NotifyService } from '../../core/notify.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 export interface UserLoginInfo {
   unique: string;
@@ -28,7 +29,11 @@ export class LoginComponent implements OnInit {
     ])
   });
 
-  constructor(private authSerive: AuthService, private notify: NotifyService) {}
+  constructor(
+    private authSerive: AuthService,
+    private notify: NotifyService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -40,7 +45,7 @@ export class LoginComponent implements OnInit {
       this.authSerive
         .login(username, password)
         .pipe(catchError(err => of(this.handleErrors(err))))
-        .subscribe();
+        .subscribe(() => this.router.navigate(['projects']));
     }
   }
 
