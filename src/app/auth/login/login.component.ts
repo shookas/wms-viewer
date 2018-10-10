@@ -45,7 +45,10 @@ export class LoginComponent implements OnInit {
       this.authSerive
         .login(username, password)
         .pipe(catchError(err => of(this.handleErrors(err))))
-        .subscribe(() => this.router.navigate(['projects']));
+        .subscribe(() => {
+          this.router.navigate(['projects']);
+          this.loginForm.reset();
+        });
     }
   }
 
