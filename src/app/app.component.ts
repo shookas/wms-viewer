@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiService } from './core/api.service';
 import { Subscription } from 'rxjs';
 import { ProjectsService } from './core/projects.service';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private apiService: ApiService,
-    private dataService: ProjectsService
+    private dataService: ProjectsService,
+    public auth: AuthService
   ) {}
 
   ngOnInit() {

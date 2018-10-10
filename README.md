@@ -18,7 +18,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 To build docker image use 
 
-`docker build -t shookas/wms-viewer:<version>`
+`docker build -t shookas/wms-viewer:<version> .`
 
 To publish image
 

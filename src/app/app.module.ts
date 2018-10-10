@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from './layout/layout.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AppRouterModule } from './router.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,8 @@ import { AppRouterModule } from './router.module';
     LayoutModule,
     ProjectsModule,
     MapViewerModule,
-    AppRouterModule
+    AppRouterModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
