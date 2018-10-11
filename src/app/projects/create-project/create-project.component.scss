@@ -1,0 +1,9 @@
+.create-project {
+  &__card {
+    max-width: 400px;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+}

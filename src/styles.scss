@@ -41,6 +41,12 @@ h4 {
 .form-card {
   margin: auto;
   margin-top: $top-margin-card;
+  text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
 }
 
 .spinner {

@@ -1,5 +1,3 @@
-<!-- <mat-toolbar>WMS Viewer
-</mat-toolbar> -->
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Cartus WMS Viewer</span>
@@ -18,7 +16,12 @@
       <button mat-menu-item
         [routerLink]="['/projects']">
         <mat-icon>dashboard</mat-icon>
-        <span>Projects</span>
+        <span>Projekty</span>
+      </button>
+      <button mat-menu-item
+        [routerLink]="['/create-project']">
+        <mat-icon>add</mat-icon>
+        <span>Utwórz projekt</span>
       </button>
       <button mat-menu-item
         [routerLink]="['/register']">

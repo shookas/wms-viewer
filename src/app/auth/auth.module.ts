@@ -7,7 +7,8 @@ import {
   MatFormFieldModule,
   MatButtonModule,
   MatInputModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatIconModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,6 +21,7 @@ import { AuthInterceptor } from './auth-interceptor';
     MatFormFieldModule,
     MatButtonModule,
     FormsModule,
+    MatIconModule,
     ReactiveFormsModule,
     MatInputModule,
     MatProgressSpinnerModule

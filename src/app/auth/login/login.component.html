@@ -15,13 +15,15 @@
             <span *ngIf="!loginForm.get('username').valid">Wprowadź poprawny email</span>
           </mat-error>
         </mat-form-field>
-
         <mat-form-field class="full-width">
           <input formControlName="password"
-            type="password"
+            [type]="hide ? 'password' : 'text'"
             matInput
             placeholder="Hasło"
             name="password">
+          <mat-icon matSuffix
+            class="clickable"
+            (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
           <mat-error>
             <span *ngIf="!loginForm.get('password').valid">Wprowadź hasło</span>
           </mat-error>
