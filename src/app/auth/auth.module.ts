@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import {
   MatCardModule,
   MatFormFieldModule,
@@ -31,6 +30,6 @@ import { AuthInterceptor } from './auth-interceptor';
       multi: true
     }
   ],
-  declarations: [LoginComponent, RegisterComponent]
+  declarations: [LoginComponent]
 })
 export class AuthModule {}

@@ -9,10 +9,10 @@
         <mat-form-field class="full-width">
           <input formControlName="username"
             matInput
-            placeholder="Email"
+            placeholder="Login"
             [autofocus]="true">
           <mat-error>
-            <span *ngIf="!loginForm.get('username').valid">Wprowadź poprawny email</span>
+            <span *ngIf="!loginForm.get('username').valid">Wprowadź nazwę użytkownika</span>
           </mat-error>
         </mat-form-field>
 

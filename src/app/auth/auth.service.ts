@@ -1,52 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserResp } from '../models/api.models';
-import { shareReplay, tap } from 'rxjs/operators';
-import * as jwt_decode from 'jwt-decode';
-import * as moment from 'moment';
+import { tap, finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-export const TOKEN_NAME = 'jwt_token';
+export const TOKEN_NAME = 'userName';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly loginUrl = 'api/v1/users/login';
+  private readonly loginUrl = 'geoserver/rest/about/version.json';
+  private readonly logoutUrl = 'geoserver/logout';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(email: string, password: string): Observable<UserResp> {
-    return this.http.post<UserResp>(this.loginUrl, { email, password }).pipe(
-      tap(this.setSession.bind(this)),
-      shareReplay()
+  login(username: string, password: string): Observable<UserResp> {
+    let headers = new HttpHeaders();
+    headers = headers.append(
+      'X-Credentials',
+      `private-user=${username}&private-pw=${password}`
     );
+    return this.http
+      .get<UserResp>(this.loginUrl, { headers })
+      .pipe(tap(this.setToken.bind(this, username)));
   }
 
   getToken() {
     return localStorage.getItem(TOKEN_NAME);
   }
 
-  getTokenExpiration(): moment.Moment {
-    const token = this.getToken();
-    if (!token) return null;
-    const decoded: any = jwt_decode(token);
-    if (decoded.exp === undefined) return null;
-
-    return moment.unix(decoded.exp);
-  }
-
-  logout() {
-    localStorage.removeItem(TOKEN_NAME);
-    this.router.navigate(['login']);
+  setToken(username: string) {
+    localStorage.setItem(TOKEN_NAME, username);
   }
 
   isLoggedIn(): boolean {
-    return moment().isBefore(this.getTokenExpiration());
+    return !!this.getToken();
   }
 
-  private setSession(authResult: UserResp) {
-    localStorage.setItem(TOKEN_NAME, authResult.token);
+  logout() {
+    this.http
+      .post(this.logoutUrl, {})
+      .pipe(finalize(this.removeSession.bind(this)))
+      .subscribe();
+  }
+
+  removeSession() {
+    localStorage.removeItem(TOKEN_NAME);
+    this.router.navigate(['login']);
   }
 }

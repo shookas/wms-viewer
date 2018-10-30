@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 export interface UserLoginInfo {
-  unique: string;
+  username: string;
   password: string;
 }
 
@@ -19,11 +19,8 @@ export interface UserLoginInfo {
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
-    username: new FormControl('test@test.test', [
-      Validators.required,
-      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-    ]),
-    password: new FormControl('123', [
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [
       Validators.required,
       Validators.minLength(3)
     ])
@@ -54,18 +51,11 @@ export class LoginComponent implements OnInit {
 
   private handleErrors(err) {
     switch (err.status) {
-      case 422:
-        const message = this.parseMessage(err.error.error);
-        this.notify.showError(message);
+      case 403:
+        this.notify.showError('Nieprawidłowy login lub hasło');
         break;
       default:
         throw new HttpErrorResponse(err);
     }
-  }
-
-  private parseMessage(message: string): string {
-    return message.includes('password')
-      ? 'Nieprawidłowe hasło'
-      : 'Błędny login';
   }
 }
