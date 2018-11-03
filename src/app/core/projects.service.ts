@@ -5,7 +5,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { Project } from '../projects/project-card/project.model';
 import { IWmsCapablilities } from '../models/wms-capabilities.model';
-const WMSCapabilities = require('wms-capabilities');
+import * as WMSCapabilities from 'wms-capabilities';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +16,13 @@ export class ProjectsService {
 
   constructor(private http: HttpClient) {}
 
-  // getProject(id: string): Observable<Project> {
-  //   return this.projects$.pipe(
-  //     map(projects => {
-  //       const foundProj = projects.find(proj => proj.id.toString() === id);
-  //       if (foundProj) {
-  //         return foundProj;
-  //       } else {
-  //         throw new Error('not found');
-  //       }
-  //     })
-  //   );
-  // }
+  getProject(workspaceName: string): Observable<Project> {
+    this.workspaces = [workspaceName];
+    return this.getCapablilities(workspaceName).pipe(
+      map(this.capabilitiesParser),
+      map(this.tranformToProject.bind(this))
+    );
+  }
 
   getProjects(): Observable<Project[]> {
     return this.http.get<WorkspacesResponse>(ProjectsService.projectsUrl).pipe(
@@ -37,15 +32,15 @@ export class ProjectsService {
       }),
       mergeMap(workspaces =>
         forkJoin(
-          workspaces.map(workspace => this.enrichProject(workspace.name))
+          workspaces.map(workspace => this.getCapablilities(workspace.name))
         )
       ),
-      map(xmlRes => xmlRes.map(this.getCapabilitiesParser)),
-      map(jsRes => jsRes.map(this.parseCapabilitiesToProject.bind(this)))
+      map(xmlRes => xmlRes.map(this.capabilitiesParser)),
+      map(jsRes => jsRes.map(this.tranformToProject.bind(this)))
     );
   }
 
-  private enrichProject(workspaceName: string) {
+  private getCapablilities(workspaceName: string) {
     const wmsUrl = `geoserver/${workspaceName}/wms`;
     const params = new HttpParams()
       .set('service', 'wms')
@@ -55,11 +50,11 @@ export class ProjectsService {
     return this.http.get(wmsUrl, { params, headers, responseType: 'text' });
   }
 
-  private getCapabilitiesParser(xml: string): IWmsCapablilities {
+  private capabilitiesParser(xml: string): IWmsCapablilities {
     return new WMSCapabilities(xml).toJSON() as IWmsCapablilities;
   }
 
-  private parseCapabilitiesToProject(
+  private tranformToProject(
     capabilities: IWmsCapablilities,
     index: number
   ): Project {
@@ -76,7 +71,7 @@ export class ProjectsService {
           capabilities.Capability.Layer.LatLonBoundingBox[2]
         ]
       ],
-      store: this.workspaces[index],
+      store: `geoserver/${this.workspaces[index]}/wms`,
       layers: capabilities.Capability.Layer.Layer
     };
   }

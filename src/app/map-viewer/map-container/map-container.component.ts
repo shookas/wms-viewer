@@ -30,7 +30,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // this.loadProject();
+    this.loadProject();
   }
 
   ngAfterViewInit() {
@@ -45,24 +45,24 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     return Object.values(this.loadingLayers).some(loading => !!loading);
   }
 
-  // private loadProject() {
-  //   this.projectSubscruption = this.route.paramMap
-  //     .pipe(
-  //       switchMap((params: ParamMap) =>
-  //         this.projectsService.getProject(params.get('id'))
-  //       )
-  //     )
-  //     .subscribe(
-  //       project => {
-  //         this.project = project;
-  //         if (!this.mapViewer) {
-  //           this.prepareMap();
-  //         }
-  //         this.prepareProjectMap();
-  //       },
-  //       () => this.router.navigate(['/projects'])
-  //     );
-  // }
+  private loadProject() {
+    this.projectSubscruption = this.route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) =>
+          this.projectsService.getProject(params.get('id'))
+        )
+      )
+      .subscribe(
+        project => {
+          this.project = project;
+          if (!this.mapViewer) {
+            this.prepareMap();
+          }
+          this.prepareProjectMap();
+        },
+        () => this.router.navigate(['/projects'])
+      );
+  }
 
   private prepareMap() {
     if (this.mapViewer) return;
@@ -109,9 +109,9 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       'Open Street Map': this.osm
     };
     const projectLayers = this.project.layers.reduce((obj, curr) => {
-      obj[curr.name] = tileLayer
+      obj[curr.Name] = tileLayer
         .wms(this.project.store, {
-          layers: curr.id,
+          layers: curr.Name,
           transparent: true,
           format: 'image/png',
           maxZoom: 20
