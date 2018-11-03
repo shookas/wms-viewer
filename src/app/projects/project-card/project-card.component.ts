@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input()
-  project: Project;
+  project: any;
 
   hoverOnMap: boolean;
 

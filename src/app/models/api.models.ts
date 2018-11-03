@@ -10,6 +10,19 @@ export interface Project {
   layers: Layer[];
 }
 
+export interface Workspace {
+  name: string;
+  href: string;
+}
+
+export interface Workspaces {
+  workspace: Workspace[];
+}
+
+export interface WorkspacesResponse {
+  workspaces: Workspaces;
+}
+
 export interface Layer {
   id: string;
   name: string;
