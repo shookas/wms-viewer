@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserResp } from '../models/api.models';
+// import { UserResp } from '../models/api.models';
 import { tap, finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -16,14 +16,14 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(username: string, password: string): Observable<UserResp> {
+  login(username: string, password: string): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.append(
       'X-Credentials',
       `private-user=${username}&private-pw=${password}`
     );
     return this.http
-      .get<UserResp>(this.loginUrl, { headers })
+      .get(this.loginUrl, { headers })
       .pipe(tap(this.setToken.bind(this, username)));
   }
 

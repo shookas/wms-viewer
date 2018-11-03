@@ -1,11 +1,11 @@
 import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
-import { Project } from './../../models/api.models';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Map, map, tileLayer, control, LeafletEvent } from 'leaflet';
+import { Map, map, tileLayer, control, LeafletEvent, LatLngBoundsExpression } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, Observable, Subject, BehaviorSubject } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
+import { Project } from 'src/app/projects/project-card/project.model';
 
 @Component({
   selector: 'app-map-container',
@@ -30,7 +30,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.loadProject();
+    // this.loadProject();
   }
 
   ngAfterViewInit() {
@@ -45,24 +45,24 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     return Object.values(this.loadingLayers).some(loading => !!loading);
   }
 
-  private loadProject() {
-    this.projectSubscruption = this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) =>
-          this.projectsService.getProject(params.get('id'))
-        )
-      )
-      .subscribe(
-        project => {
-          this.project = project;
-          if (!this.mapViewer) {
-            this.prepareMap();
-          }
-          this.prepareProjectMap();
-        },
-        () => this.router.navigate(['/projects'])
-      );
-  }
+  // private loadProject() {
+  //   this.projectSubscruption = this.route.paramMap
+  //     .pipe(
+  //       switchMap((params: ParamMap) =>
+  //         this.projectsService.getProject(params.get('id'))
+  //       )
+  //     )
+  //     .subscribe(
+  //       project => {
+  //         this.project = project;
+  //         if (!this.mapViewer) {
+  //           this.prepareMap();
+  //         }
+  //         this.prepareProjectMap();
+  //       },
+  //       () => this.router.navigate(['/projects'])
+  //     );
+  // }
 
   private prepareMap() {
     if (this.mapViewer) return;
@@ -99,7 +99,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private prepareProjectMap() {
     if (this.project.bounds) {
-      this.mapViewer.fitBounds(this.project.bounds);
+      this.mapViewer.fitBounds(this.project.bounds as LatLngBoundsExpression);
     }
     this.addLayers();
   }

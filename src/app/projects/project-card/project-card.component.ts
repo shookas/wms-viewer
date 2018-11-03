@@ -1,7 +1,7 @@
-import { Project } from './../../models/api.models';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { map, tileLayer, Map } from 'leaflet';
+import { map, tileLayer, Map, LatLngBounds, LatLngBoundsExpression } from 'leaflet';
 import { Router } from '@angular/router';
+import { Project } from './project.model';
 
 @Component({
   selector: 'app-project-card',
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input()
-  project: any;
+  project: Project;
 
   hoverOnMap: boolean;
 
@@ -48,7 +48,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   private zoomToBounds() {
     if (this.project.bounds) {
-      this.mapView.fitBounds(this.project.bounds);
+      this.mapView.fitBounds(this.project.bounds as LatLngBoundsExpression);
     }
   }
 }
