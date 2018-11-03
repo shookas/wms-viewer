@@ -108,6 +108,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     const baseLayers = {
       'Open Street Map': this.osm
     };
+    if (!this.project.layers) return;
     const projectLayers = this.project.layers.reduce((obj, curr) => {
       obj[curr.Name] = tileLayer
         .wms(this.project.store, {
