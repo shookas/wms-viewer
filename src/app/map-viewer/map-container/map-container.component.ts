@@ -1,11 +1,11 @@
 import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
-import { Project } from './../../models/api.models';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Map, map, tileLayer, control, LeafletEvent } from 'leaflet';
+import { Map, map, tileLayer, control, LeafletEvent, LatLngBoundsExpression } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, Observable, Subject, BehaviorSubject } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
+import { Project } from 'src/app/projects/project-card/project.model';
 
 @Component({
   selector: 'app-map-container',
@@ -99,7 +99,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private prepareProjectMap() {
     if (this.project.bounds) {
-      this.mapViewer.fitBounds(this.project.bounds);
+      this.mapViewer.fitBounds(this.project.bounds as LatLngBoundsExpression);
     }
     this.addLayers();
   }
@@ -108,10 +108,11 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     const baseLayers = {
       'Open Street Map': this.osm
     };
+    if (!this.project.layers) return;
     const projectLayers = this.project.layers.reduce((obj, curr) => {
-      obj[curr.name] = tileLayer
+      obj[curr.Name] = tileLayer
         .wms(this.project.store, {
-          layers: curr.id,
+          layers: curr.Name,
           transparent: true,
           format: 'image/png',
           maxZoom: 20

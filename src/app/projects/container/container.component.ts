@@ -1,7 +1,7 @@
-import { ProjectsService } from '../../core/projects.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Project } from '../../models/api.models';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { ProjectsService } from 'src/app/core/projects.service';
+import { Project } from '../project-card/project.model';
 
 @Component({
   selector: 'app-projects-container',
@@ -9,18 +9,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./container.component.scss']
 })
 export class ProjectsContainerComponent implements OnInit, OnDestroy {
-  projects: Project[];
+  projects$: Observable<Project[]>;
 
-  private projectsSubscription: Subscription;
-  constructor(private dataService: ProjectsService) {}
+  constructor(private projectsService: ProjectsService) {}
 
   ngOnInit() {
-    this.projectsSubscription = this.dataService.projects$.subscribe(
-      projects => (this.projects = projects)
-    );
+    this.projects$ = this.projectsService.getProjects();
   }
 
   ngOnDestroy() {
-    this.projectsSubscription.unsubscribe();
   }
 }
