@@ -1,7 +1,15 @@
 version: '2.0'
 
 services:
-  app:
+  wms-viewer:
     image: 'shookas/wms-viewer'
     ports:
-      - 3000:80
+      - 4200:80
+    restart: always
+  geoserver:
+    image: 'kartoza/geoserver'
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - $HOME/geoserver_data:/opt/geoserver/data_dir
