@@ -6,7 +6,7 @@
     <span class="example-fill-remaining-space"></span>
     <span class="align-center"></span>
     <span class="example-spacer"></span>
-    <span *ngIf="auth.isLoggedIn()">Witaj {{auth.getToken()}}!</span>
+    <span *ngIf="auth.isLoggedIn()">Witaj {{auth.getUserName()}}!</span>
     <button mat-button
       [disabled]="!auth.isLoggedIn()"
       [routerLink]="['/projects']">

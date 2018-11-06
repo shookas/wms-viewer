@@ -1,11 +1,19 @@
 import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Map, map, tileLayer, control, LeafletEvent, LatLngBoundsExpression } from 'leaflet';
+import {
+  Map,
+  map,
+  tileLayer,
+  control,
+  LeafletEvent,
+  LatLngBoundsExpression,
+} from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Subscription, Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
 import { Project } from 'src/app/projects/project-card/project.model';
+import { MapHelperService } from '../map-helper.service';
 
 @Component({
   selector: 'app-map-container',
@@ -26,10 +34,12 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private projectsService: ProjectsService
+    private projectsService: ProjectsService,
+    private mapHelper: MapHelperService
   ) {}
 
   ngOnInit() {
+    this.mapHelper.registerWmsLoader();
     this.loadProject();
   }
 
@@ -110,8 +120,8 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     if (!this.project.layers) return;
     const projectLayers = this.project.layers.reduce((obj, curr) => {
-      obj[curr.Name] = tileLayer
-        .wms(this.project.store, {
+      obj[curr.Name] = (tileLayer as any)
+        .wms_headers(this.project.store, {
           layers: curr.Name,
           transparent: true,
           format: 'image/png',
