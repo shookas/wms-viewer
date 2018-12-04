@@ -117,6 +117,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mapViewer.fitBounds(this.project.bounds as LatLngBoundsExpression);
     }
     this.addLayers();
+    this.addScale();
   }
 
   private addLayers() {
@@ -144,5 +145,12 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private setLoadingLayer(loading: boolean, event: LeafletEvent) {
     this.loadingLayers[event.target.options.layers] = loading;
+  }
+
+  private addScale() {
+    control.scale({
+      imperial: false,
+      position: 'bottomleft'
+    }).addTo(this.mapViewer);
   }
 }
