@@ -16,7 +16,9 @@ export class ErrorsHandler implements ErrorHandler {
       if (!navigator.onLine) {
         // Handle offline error
       } else {
-        this.notifyService.showError(error);
+        if (error.status !== 0) {
+          this.notifyService.showError(error);
+        }
       }
     }
     console.error(error);
