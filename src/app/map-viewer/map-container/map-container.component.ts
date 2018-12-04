@@ -23,14 +23,18 @@ import { MapHelperService } from '../map-helper.service';
 export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   projectSubscruption: Subscription;
   loadingLayers = {};
+  maxZoom = 22;
+  minZoom = 12;
   readonly osm = tileLayer(
     'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
     {
-      maxZoom: 20
+      maxZoom: this.maxZoom,
+      minZoom: this.minZoom
     }
   );
   project: Project;
   mapViewer: Map;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -78,7 +82,8 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.mapViewer) return;
     this.mapViewer = map('map', {
       layers: [this.osm],
-      maxZoom: 20
+      maxZoom: this.maxZoom,
+      minZoom: this.minZoom
     });
     const measureControl = (control as any).measure({
       primaryLengthUnit: 'metry',
@@ -125,7 +130,9 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
           layers: curr.Name,
           transparent: true,
           format: 'image/png',
-          maxZoom: 20
+          maxZoom: this.maxZoom,
+          minZoom: this.minZoom,
+          tiled: true
         })
         .addEventListener('load', this.setLoadingLayer.bind(this, false))
         .addEventListener('add', this.setLoadingLayer.bind(this, true))
