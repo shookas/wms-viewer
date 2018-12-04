@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WorkspacesResponse } from '../models/api.models';
-import { Observable, forkJoin } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable, forkJoin, Subject, BehaviorSubject } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { Project } from '../projects/project-card/project.model';
 import { IWmsCapablilities } from '../models/wms-capabilities.model';
@@ -12,6 +12,7 @@ import * as WMSCapabilities from 'wms-capabilities';
 })
 export class ProjectsService {
   static readonly projectsUrl = 'geoserver/rest/workspaces.json';
+  currentProject = new BehaviorSubject<Project>(null);
   private workspaces: string[];
 
   constructor(private http: HttpClient) {}

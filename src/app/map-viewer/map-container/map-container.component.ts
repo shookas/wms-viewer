@@ -68,6 +68,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe(
         project => {
+          this.projectsService.currentProject.next(project);
           this.project = project;
           if (!this.mapViewer) {
             this.prepareMap();
