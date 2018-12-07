@@ -1,2 +1,6 @@
-<div id="map" class="map-viewer"></div>
+<div id="map" class="map-viewer">
+  <div class="map-viewer__section map-viewer__section--bottom">
+    <app-lat-lng [latlng]="latlng"></app-lat-lng>
+  </div>
+</div>
 <app-map-spinner *ngIf="isLoadingLayers()"></app-map-spinner>

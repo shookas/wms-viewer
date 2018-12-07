@@ -1,4 +1,14 @@
 .map-viewer {
   height: 100%;
   width: 100%;
+  &__section {
+    position: absolute;
+    z-index: 10000;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &--bottom {
+      bottom: 0px;
+    }
+  }
 }

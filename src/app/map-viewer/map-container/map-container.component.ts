@@ -8,12 +8,14 @@ import {
   control,
   LeafletEvent,
   LatLngBoundsExpression,
+  LeafletMouseEvent,
+  LatLng
 } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
 import { Project } from 'src/app/projects/project-card/project.model';
-import { MapHelperService } from '../map-helper.service';
+import { MapService } from '../map.service';
 
 @Component({
   selector: 'app-map-container',
@@ -25,6 +27,10 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   loadingLayers = {};
   maxZoom = 22;
   minZoom = 12;
+  latlng: {
+    lat: string;
+    lng: string;
+  };
   readonly osm = tileLayer(
     'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
     {
@@ -39,16 +45,19 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private projectsService: ProjectsService,
-    private mapHelper: MapHelperService
+    private mapService: MapService
   ) {}
 
   ngOnInit() {
-    this.mapHelper.registerWmsLoader();
+    this.mapService.registerWmsLoader();
     this.loadProject();
   }
 
   ngAfterViewInit() {
     this.prepareMap();
+    this.mapViewer.addEventListener('mousemove', (event: LeafletMouseEvent) => {
+      this.latlng = this.mapService.convertDMS(event.latlng);
+    });
   }
 
   ngOnDestroy() {
@@ -149,9 +158,11 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private addScale() {
-    control.scale({
-      imperial: false,
-      position: 'bottomleft'
-    }).addTo(this.mapViewer);
+    control
+      .scale({
+        imperial: false,
+        position: 'bottomleft'
+      })
+      .addTo(this.mapViewer);
   }
 }
