@@ -99,7 +99,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       primaryLengthUnit: 'metry',
       secondaryLengthUnit: undefined,
       primaryAreaUnit: 'hektary',
-      secondaryAreaUnit: undefined,
+      secondaryAreaUnit: 'sqmeters',
       activeColor: '#a50e0e',
       completedColor: '#a50e0e',
       units: {
@@ -150,7 +150,9 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
         .addEventListener('remove', this.setLoadingLayer.bind(this, false));
       return obj;
     }, {});
-    control.layers(baseLayers, projectLayers).addTo(this.mapViewer);
+    control.layers(baseLayers, projectLayers, {
+      collapsed: false
+    }).addTo(this.mapViewer);
   }
 
   private setLoadingLayer(loading: boolean, event: LeafletEvent) {
