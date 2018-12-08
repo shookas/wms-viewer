@@ -96,6 +96,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
       minZoom: this.minZoom
     });
     const measureControl = (control as any).measure({
+      position: 'topleft',
       primaryLengthUnit: 'metry',
       secondaryLengthUnit: undefined,
       primaryAreaUnit: 'hektary',

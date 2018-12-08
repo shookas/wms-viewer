@@ -1,6 +1,20 @@
-<div id="map" class="map-viewer">
-  <div class="map-viewer__section map-viewer__section--bottom">
-    <app-lat-lng [latlng]="latlng"></app-lat-lng>
-  </div>
-</div>
+<mat-drawer-container class="container">
+  <mat-drawer #drawer
+    [mode]="'side'"
+    position="end"
+    opened>I'm a drawer</mat-drawer>
+  <mat-drawer-content>
+    <div id="map"
+      class="container map-viewer">
+      <div class="on-map map-viewer__section map-viewer__section--bottom">
+        <app-lat-lng [latlng]="latlng"></app-lat-lng>
+      </div>
+      <button mat-mini-fab
+        (click)="drawer.toggle()"
+        class="on-map">
+        <mat-icon>layers</mat-icon>
+      </button>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
 <app-map-spinner *ngIf="isLoadingLayers()"></app-map-spinner>
