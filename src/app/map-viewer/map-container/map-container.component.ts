@@ -1,6 +1,13 @@
 import { ProjectsService } from './../../core/projects.service';
 import { switchMap } from 'rxjs/operators';
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  AfterViewChecked
+} from '@angular/core';
 import {
   Map,
   map,
@@ -22,7 +29,8 @@ import { MapService } from '../map.service';
   templateUrl: './map-container.component.html',
   styleUrls: ['./map-container.component.scss']
 })
-export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapContainerComponent
+  implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
   projectSubscruption: Subscription;
   loadingLayers = {};
   maxZoom = 22;
@@ -41,11 +49,15 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   project: Project;
   mapViewer: Map;
 
+  baseLayers;
+  projectLayers;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private projectsService: ProjectsService,
-    private mapService: MapService
+    private mapService: MapService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -58,6 +70,10 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mapViewer.addEventListener('mousemove', (event: LeafletMouseEvent) => {
       this.latlng = this.mapService.convertDMS(event.latlng);
     });
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
   }
 
   ngOnDestroy() {
@@ -132,11 +148,11 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private addLayers() {
-    const baseLayers = {
+    this.baseLayers = {
       'Open Street Map': this.osm
     };
     if (!this.project.layers) return;
-    const projectLayers = this.project.layers.reduce((obj, curr) => {
+    this.projectLayers = this.project.layers.reduce((obj, curr) => {
       obj[curr.Name] = (tileLayer as any)
         .wms_headers(this.project.store, {
           layers: curr.Name,
@@ -151,9 +167,10 @@ export class MapContainerComponent implements OnInit, AfterViewInit, OnDestroy {
         .addEventListener('remove', this.setLoadingLayer.bind(this, false));
       return obj;
     }, {});
-    control.layers(baseLayers, projectLayers, {
-      collapsed: false
-    }).addTo(this.mapViewer);
+
+    // control.layers(baseLayers, projectLayers, {
+    //   collapsed: false
+    // }).addTo(this.mapViewer);
   }
 
   private setLoadingLayer(loading: boolean, event: LeafletEvent) {

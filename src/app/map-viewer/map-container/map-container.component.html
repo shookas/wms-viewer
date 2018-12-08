@@ -2,7 +2,11 @@
   <mat-drawer #drawer
     [mode]="'side'"
     position="end"
-    opened>I'm a drawer</mat-drawer>
+    opened>
+    <app-map-layers [baseLayers]="baseLayers"
+      [projectLayers]="projectLayers"
+      [map]="mapViewer"></app-map-layers>
+  </mat-drawer>
   <mat-drawer-content>
     <div id="map"
       class="container map-viewer">
