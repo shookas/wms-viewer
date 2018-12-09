@@ -4,6 +4,9 @@
       [value]="layer[1]">{{layer[0]}}</mat-radio-button>
   </div>
 </mat-radio-group>
-<div *ngFor="let layer of projectLayers">
-  <mat-checkbox (change)="onProjectLayerChange($event, layer[1])">{{layer[0]}}</mat-checkbox>
-</div>
+<div [dragula]="'PROJECT_LAYERS'"
+  [dragulaModel]="projectLayers"
+  (dragulaModelChange)="onDragulaModelChange($event)">
+  <div *ngFor="let layer of projectLayers">
+    <mat-checkbox (change)="onProjectLayerChange($event, layer[1])">{{layer[0]}}</mat-checkbox>
+  </div>

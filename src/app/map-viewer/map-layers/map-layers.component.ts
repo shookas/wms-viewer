@@ -47,4 +47,11 @@ export class MapLayersComponent implements OnInit {
   onBaseLayerChange(change: MatRadioChange) {
     change.value.addTo(this.map);
   }
+
+  onDragulaModelChange(event) {
+    this._projectLayers = event;
+    this.projectLayers.forEach((entry, index) => {
+      (entry[1] as TileLayer).setZIndex(index + 1);
+    });
+  }
 }

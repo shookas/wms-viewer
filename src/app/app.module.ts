@@ -12,6 +12,7 @@ import { LayoutModule } from './layout/layout.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AppRouterModule } from './router.module';
 import { AuthModule } from './auth/auth.module';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,8 @@ import { AuthModule } from './auth/auth.module';
     ProjectsModule,
     MapViewerModule,
     AppRouterModule,
-    AuthModule
+    AuthModule,
+    DragulaModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
