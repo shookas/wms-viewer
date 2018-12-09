@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Map } from 'leaflet';
+import { Map, TileLayer } from 'leaflet';
+import { MatCheckboxChange, MatRadioChange } from '@angular/material';
 
 @Component({
   selector: 'app-map-layers',
@@ -10,7 +11,7 @@ export class MapLayersComponent implements OnInit {
   @Input()
   map: Map;
 
-  _baseLayers;
+  _baseLayers: any[];
   @Input()
   set baseLayers(value) {
     if (value) {
@@ -20,7 +21,7 @@ export class MapLayersComponent implements OnInit {
   get baseLayers() {
     return this._baseLayers;
   }
-  _projectLayers;
+  _projectLayers: any[];
   @Input()
   set projectLayers(value) {
     if (value) {
@@ -34,4 +35,16 @@ export class MapLayersComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  onProjectLayerChange(change: MatCheckboxChange, layer: TileLayer) {
+    if (change.checked) {
+      layer.addTo(this.map);
+    } else {
+      layer.remove();
+    }
+  }
+
+  onBaseLayerChange(change: MatRadioChange) {
+    change.value.addTo(this.map);
+  }
 }

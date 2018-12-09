@@ -2,7 +2,7 @@
   <mat-drawer #drawer
     [mode]="'side'"
     position="end"
-    opened>
+    [(opened)]="sideNavOpened">
     <app-map-layers [baseLayers]="baseLayers"
       [projectLayers]="projectLayers"
       [map]="mapViewer"></app-map-layers>
@@ -10,14 +10,14 @@
   <mat-drawer-content>
     <div id="map"
       class="container map-viewer">
+      <button mat-mini-fab
+        (click)="sideNavOpened = !sideNavOpened"
+        class="on-map layers-toggle">
+        <mat-icon>{{sideNavOpened ? 'layers_clear': 'layers'}}</mat-icon>
+      </button>
       <div class="on-map map-viewer__section map-viewer__section--bottom">
         <app-lat-lng [latlng]="latlng"></app-lat-lng>
       </div>
-      <button mat-mini-fab
-        (click)="drawer.toggle()"
-        class="on-map">
-        <mat-icon>layers</mat-icon>
-      </button>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

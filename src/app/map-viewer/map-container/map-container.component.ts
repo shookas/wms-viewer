@@ -52,6 +52,8 @@ export class MapContainerComponent
   baseLayers;
   projectLayers;
 
+  sideNavOpened: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -167,10 +169,6 @@ export class MapContainerComponent
         .addEventListener('remove', this.setLoadingLayer.bind(this, false));
       return obj;
     }, {});
-
-    // control.layers(baseLayers, projectLayers, {
-    //   collapsed: false
-    // }).addTo(this.mapViewer);
   }
 
   private setLoadingLayer(loading: boolean, event: LeafletEvent) {

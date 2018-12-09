@@ -3,12 +3,25 @@ import { CommonModule } from '@angular/common';
 import {
   MatSidenavModule,
   MatButtonModule,
-  MatIconModule
+  MatIconModule,
+  MatCheckboxModule,
+  MatRadioModule
 } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+
+const shared = [
+  CommonModule,
+  MatSidenavModule,
+  MatButtonModule,
+  MatIconModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  FormsModule
+];
 
 @NgModule({
-  imports: [CommonModule, MatSidenavModule, MatButtonModule, MatIconModule],
+  imports: [...shared],
   declarations: [],
-  exports: [CommonModule, MatSidenavModule, MatButtonModule, MatIconModule]
+  exports: [...shared]
 })
 export class SharedModule {}

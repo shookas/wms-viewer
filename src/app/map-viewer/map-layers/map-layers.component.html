@@ -1,3 +1,9 @@
-<p>
-  map-layers works!
-</p>
+<mat-radio-group (change)="onBaseLayerChange($event)">
+  <div *ngFor="let layer of baseLayers; let i = index">
+    <mat-radio-button [checked]="i === 0"
+      [value]="layer[1]">{{layer[0]}}</mat-radio-button>
+  </div>
+</mat-radio-group>
+<div *ngFor="let layer of projectLayers">
+  <mat-checkbox (change)="onProjectLayerChange($event, layer[1])">{{layer[0]}}</mat-checkbox>
+</div>
