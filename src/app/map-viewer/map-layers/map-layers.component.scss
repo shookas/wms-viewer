@@ -9,7 +9,10 @@ $layer-height: 50px;
     }
     &__project {
       & /deep/ .mat-checkbox-label {
-        min-width: 50px;
+        width: 100px;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
