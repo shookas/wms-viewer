@@ -1,9 +1,6 @@
 .map-viewer {
-  height: 100%;
-  width: 100%;
   &__section {
     position: absolute;
-    z-index: 10000;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -11,4 +8,14 @@
       bottom: 0px;
     }
   }
+}
+
+.on-map {
+  z-index: 10000;
+}
+
+.layers-toggle {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
