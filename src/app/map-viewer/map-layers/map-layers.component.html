@@ -1,12 +1,25 @@
-<mat-radio-group (change)="onBaseLayerChange($event)">
-  <div *ngFor="let layer of baseLayers; let i = index">
-    <mat-radio-button [checked]="i === 0"
-      [value]="layer[1]">{{layer[0]}}</mat-radio-button>
+<div class="layers-container">
+  Wartwy podkładu:
+  <mat-radio-group (change)="onBaseLayerChange($event)">
+    <div *ngFor="let layer of baseLayers; let i = index">
+      <mat-radio-button class="layer layer__base"
+        [checked]="i === 0"
+        [value]="layer[1]">{{layer[0]}}</mat-radio-button>
+    </div>
+  </mat-radio-group>
+  <hr>
+  Warstwy projektu:
+  <div [dragula]="dragProjectLayers"
+    [dragulaModel]="projectLayers"
+    (dragulaModelChange)="onDragulaModelChange($event)">
+    <div *ngFor="let layer of projectLayers">
+      <div class="layer layer__project">
+        <mat-checkbox (change)="onProjectLayerChange($event, layer[1])">{{layer[0]}}</mat-checkbox>
+        <mat-slider [max]="100"
+          [thumbLabel]="true"
+          [value]="100"
+          (change)="onSliderChange($event, layer[1])"></mat-slider>
+      </div>
+    </div>
   </div>
-</mat-radio-group>
-<div [dragula]="'PROJECT_LAYERS'"
-  [dragulaModel]="projectLayers"
-  (dragulaModelChange)="onDragulaModelChange($event)">
-  <div *ngFor="let layer of projectLayers">
-    <mat-checkbox (change)="onProjectLayerChange($event, layer[1])">{{layer[0]}}</mat-checkbox>
-  </div>
+</div>

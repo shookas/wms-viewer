@@ -1,0 +1,16 @@
+$layer-height: 50px;
+.layers-container {
+  margin: 15px;
+  .layer {
+    height: $layer-height;
+    &__base {
+      line-height: $layer-height;
+      white-space: nowrap;
+    }
+    &__project {
+      & /deep/ .mat-checkbox-label {
+        min-width: 50px;
+      }
+    }
+  }
+}

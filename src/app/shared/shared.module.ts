@@ -5,7 +5,8 @@ import {
   MatButtonModule,
   MatIconModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSliderModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -16,7 +17,8 @@ const shared = [
   MatIconModule,
   MatCheckboxModule,
   MatRadioModule,
-  FormsModule
+  FormsModule,
+  MatSliderModule
 ];
 
 @NgModule({

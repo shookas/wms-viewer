@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Map, TileLayer } from 'leaflet';
-import { MatCheckboxChange, MatRadioChange } from '@angular/material';
+import { MatCheckboxChange, MatRadioChange, MatSliderChange } from '@angular/material';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'app-map-layers',
@@ -32,9 +33,16 @@ export class MapLayersComponent implements OnInit {
     return this._projectLayers;
   }
 
-  constructor() {}
+  dragProjectLayers = 'DRAG_PROJECT_LAYERS';
 
-  ngOnInit() {}
+  constructor(private dragulaService: DragulaService) {}
+
+  ngOnInit() {
+    this.dragulaService.createGroup(this.dragProjectLayers, {
+      moves: (el, source, handle, sibling) =>
+        handle.className === 'mat-checkbox-label'
+    });
+  }
 
   onProjectLayerChange(change: MatCheckboxChange, layer: TileLayer) {
     if (change.checked) {
@@ -53,5 +61,10 @@ export class MapLayersComponent implements OnInit {
     this.projectLayers.forEach((entry, index) => {
       (entry[1] as TileLayer).setZIndex(index + 1);
     });
+  }
+
+  onSliderChange(event: MatSliderChange, layer: TileLayer) {
+    const opacity = event.value / 100;
+    layer.setOpacity(opacity);
   }
 }
