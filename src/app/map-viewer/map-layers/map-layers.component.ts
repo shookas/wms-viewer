@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Map, TileLayer } from 'leaflet';
-import { MatCheckboxChange, MatRadioChange, MatSliderChange } from '@angular/material';
+import {
+  MatCheckboxChange,
+  MatRadioChange,
+  MatSliderChange
+} from '@angular/material';
 import { DragulaService } from 'ng2-dragula';
 
 @Component({
@@ -26,7 +30,13 @@ export class MapLayersComponent implements OnInit {
   @Input()
   set projectLayers(value) {
     if (value) {
-      this._projectLayers = Object.entries(value);
+      this._projectLayers = Object.entries(value)
+        .reverse()
+        .map((entry, i, array) => {
+          const zIndex = array.length - i + 1;
+          (entry[1] as TileLayer).setZIndex(zIndex);
+          return entry;
+        });
     }
   }
   get projectLayers() {
@@ -53,13 +63,17 @@ export class MapLayersComponent implements OnInit {
   }
 
   onBaseLayerChange(change: MatRadioChange) {
+    this.baseLayers.forEach(entry => {
+      (entry[1] as TileLayer).remove();
+    });
     change.value.addTo(this.map);
   }
 
   onDragulaModelChange(event) {
     this._projectLayers = event;
-    this.projectLayers.forEach((entry, index) => {
-      (entry[1] as TileLayer).setZIndex(index + 1);
+    this.projectLayers.forEach((entry, index, array) => {
+      const zIndex = array.length - index + 1;
+      (entry[1] as TileLayer).setZIndex(zIndex);
     });
   }
 

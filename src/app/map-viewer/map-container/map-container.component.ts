@@ -41,10 +41,12 @@ export class MapContainerComponent
   };
   readonly osm = tileLayer(
     'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
-    {
-      maxZoom: this.maxZoom,
-      minZoom: this.minZoom
-    }
+  );
+  readonly osm_BlackAndWhite = tileLayer(
+    'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+  );
+  readonly esri_WorldImagery = tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
   );
   project: Project;
   mapViewer: Map;
@@ -151,7 +153,9 @@ export class MapContainerComponent
 
   private addLayers() {
     this.baseLayers = {
-      'Open Street Map': this.osm
+      'Open Street Map': this.osm,
+      'Open Street Map B/W': this.osm_BlackAndWhite,
+      'Esri Orto': this.esri_WorldImagery
     };
     if (!this.project.layers) return;
     this.projectLayers = this.project.layers.reduce((obj, curr) => {
