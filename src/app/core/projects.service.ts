@@ -72,7 +72,7 @@ export class ProjectsService {
           capabilities.Capability.Layer.LatLonBoundingBox[2]
         ]
       ],
-      store: `geoserver/${this.workspaces[index]}/wms`,
+      store: `geoserver/gwc/service/wms`,
       layers: capabilities.Capability.Layer.Layer
     };
   }

@@ -161,7 +161,7 @@ export class MapContainerComponent
     this.projectLayers = this.project.layers.reduce((obj, curr) => {
       obj[curr.Name] = (tileLayer as any)
         .wms_headers(this.project.store, {
-          layers: curr.Name,
+          layers: this.project.id + ':' + curr.Name,
           transparent: true,
           format: 'image/png',
           maxZoom: this.maxZoom,
