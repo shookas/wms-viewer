@@ -16,13 +16,13 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Build and publish docker image
 
-To build docker image use 
+To build docker image with version from package.json use 
 
-`docker build -t shookas/wms-viewer:<version> -t shookas/wms-viewer:latest .`
+`npm run docker:build`
 
 To publish image
 
-`docker push shookas/wms-viewer:<version>`
+`docker push shookas/wms-viewer:$(node -p "require(\"./package.json\").version")`
 
 ## Run docker image 
 
