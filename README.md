@@ -42,6 +42,30 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+## Local development
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Start backend geoserver
+1) Use `kartoza/geoserver` for backend geoserver contenerization and point to locally created `~/geoserver_data` 
+
+    folder
+`sudo docker run -d -p 8080:8080 -v $HOME/geoserver_data:/opt/geoserver/data_dir kartoza/geoserver`
+
+    No database needed because all backend state will be written in `~/geoserver_data` folder
+  
+2) Enable authentication via headers in Geoservser
+    - Security > Authentication
+  
+      Add Authentication Filter `Authenticate From Headers` and leave deafulat settings
+    
+    - Add this filter into authentication filter chains to rest services and move it to the first place
+
+3) Allow to use rest GET calls for ADMIN role
+
+    - edit `%HOME/geoserver_data/security/services.properties` file
+    
+      `rest:GET=ADMIN`
+
+### Start frontend
+`ng serve`
+
+Proxy is defined in dev server configuration `proxy.conf.json`

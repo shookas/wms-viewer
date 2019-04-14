@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Map, TileLayer } from 'leaflet';
 import {
   MatCheckboxChange,
@@ -12,7 +12,7 @@ import { DragulaService } from 'ng2-dragula';
   templateUrl: './map-layers.component.html',
   styleUrls: ['./map-layers.component.scss']
 })
-export class MapLayersComponent implements OnInit {
+export class MapLayersComponent implements OnInit, OnDestroy {
   @Input()
   map: Map;
 
@@ -80,5 +80,9 @@ export class MapLayersComponent implements OnInit {
   onSliderChange(event: MatSliderChange, layer: TileLayer) {
     const opacity = event.value / 100;
     layer.setOpacity(opacity);
+  }
+
+  ngOnDestroy() {
+    this.dragulaService.destroy(this.dragProjectLayers);
   }
 }

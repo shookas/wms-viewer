@@ -8,6 +8,7 @@ $layer-height: 50px;
       white-space: nowrap;
     }
     &__project {
+      touch-action: none;
       & /deep/ .mat-checkbox-label {
         width: 100px;
         white-space: normal;

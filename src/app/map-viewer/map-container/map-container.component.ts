@@ -40,13 +40,13 @@ export class MapContainerComponent
     lng: string;
   };
   readonly osm = tileLayer(
-    'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+    'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
   );
   readonly osm_BlackAndWhite = tileLayer(
-    'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+    'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
   );
   readonly esri_WorldImagery = tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
   );
   project: Project;
   mapViewer: Map;
@@ -71,9 +71,14 @@ export class MapContainerComponent
 
   ngAfterViewInit() {
     this.prepareMap();
-    this.mapViewer.addEventListener('mousemove', (event: LeafletMouseEvent) => {
-      this.latlng = this.mapService.convertDMS(event.latlng);
-    });
+    this.mapViewer.addEventListener(
+      'mousemove',
+      this.updateCordsEvent.bind(this)
+    );
+    this.mapViewer.addEventListener(
+      'touchmove',
+      this.updateCordsEvent.bind(this)
+    );
   }
 
   ngAfterViewChecked() {
@@ -86,6 +91,10 @@ export class MapContainerComponent
 
   isLoadingLayers() {
     return Object.values(this.loadingLayers).some(loading => !!loading);
+  }
+
+  private updateCordsEvent(event: LeafletMouseEvent) {
+    this.latlng = this.mapService.convertDMS(event.latlng);
   }
 
   private loadProject() {

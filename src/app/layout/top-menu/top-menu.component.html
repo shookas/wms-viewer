@@ -4,20 +4,24 @@
 -->
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>Cartus WMS Viewer</span>
+    <span class="hide-on-narrow">Cartus WMS Viewer</span>
     <span class="spacer"> {{ currentProjectTitle }} </span>
-    <span *ngIf="auth.isLoggedIn()">Witaj {{ auth.getUserName() }}!</span>
-    <button
-      mat-button
+    <span class="hide-on-narrow"
+      *ngIf="auth.isLoggedIn()">Witaj {{ auth.getUserName() }}!</span>
+    <button mat-button
       (click)="purgeProject()"
       [disabled]="!auth.isLoggedIn()"
-      [routerLink]="['/projects']"
-    >
+      [routerLink]="['/projects']">
       <mat-icon>dashboard</mat-icon>
       <span>Projects</span>
     </button>
-    <button *ngIf="auth.isLoggedIn()" mat-button (click)="auth.logout()">
-      Logout
+
+    <button mat-button
+      *ngIf="auth.isLoggedIn()"
+      mat-button
+      (click)="auth.logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

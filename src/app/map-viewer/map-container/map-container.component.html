@@ -10,8 +10,11 @@
   <mat-drawer-content>
     <div id="map"
       class="container map-viewer">
-      <button mat-mini-fab
+      <button mat-fab
         (click)="sideNavOpened = !sideNavOpened"
+        matTooltip="Warstwy mapy"
+        matTooltipPosition="left"
+        aria-label="Przysisk który pokazuje warstwy mapy"
         class="on-map layers-toggle">
         <mat-icon>{{sideNavOpened ? 'layers_clear': 'layers'}}</mat-icon>
       </button>
