@@ -9,7 +9,7 @@ $layer-height: 50px;
     }
     &__project {
       touch-action: none;
-      & /deep/ .mat-checkbox-label {
+      & ::ng-deep .mat-checkbox-label {
         width: 100px;
         white-space: normal;
         overflow: hidden;

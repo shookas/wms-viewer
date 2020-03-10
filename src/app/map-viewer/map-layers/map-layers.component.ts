@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Map, TileLayer } from 'leaflet';
-import {
-  MatCheckboxChange,
-  MatRadioChange,
-  MatSliderChange
-} from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatSliderChange } from '@angular/material/slider';
+import { MatRadioChange } from '@angular/material/radio';
 import { DragulaService } from 'ng2-dragula';
 
 @Component({
