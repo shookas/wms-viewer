@@ -34,7 +34,9 @@ export class MapLayersComponent implements OnInit, OnDestroy {
           const zIndex = array.length - i + 1;
           (entry[1] as TileLayer).setZIndex(zIndex);
           return entry;
-        });
+        })
+        .sort((a, b) => (a[0] > b[0] ? 1 : -1));
+      this.setLayersOrder();
     }
   }
   get projectLayers() {
@@ -69,10 +71,7 @@ export class MapLayersComponent implements OnInit, OnDestroy {
 
   onDragulaModelChange(event) {
     this._projectLayers = event;
-    this.projectLayers.forEach((entry, index, array) => {
-      const zIndex = array.length - index + 1;
-      (entry[1] as TileLayer).setZIndex(zIndex);
-    });
+    this.setLayersOrder();
   }
 
   onSliderChange(event: MatSliderChange, layer: TileLayer) {
@@ -82,5 +81,12 @@ export class MapLayersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dragulaService.destroy(this.dragProjectLayers);
+  }
+
+  private setLayersOrder() {
+    this.projectLayers.forEach((entry, index, array) => {
+      const zIndex = array.length - index + 1;
+      (entry[1] as TileLayer).setZIndex(zIndex);
+    });
   }
 }
