@@ -9,12 +9,12 @@
         <mat-slider [max]="100"
           [thumbLabel]="true"
           [value]="100"
-          (change)="onSliderChange($event, layer[1])"></mat-slider>
+          (input)="onSliderChange($event, layer[1])"></mat-slider>
       </div>
     </div>
   </div>
   <hr>
-  Wartwy podkładu:
+  Warstwy podkładu:
   <mat-radio-group (change)="onBaseLayerChange($event)">
     <div *ngFor="let layer of baseLayers; let i = index">
       <mat-radio-button class="layer layer__base"
