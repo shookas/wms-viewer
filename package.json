@@ -10,8 +10,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "predocker:build": "npm run build",
-    "docker:build": "docker build -t shookas/wms-viewer:$(node -p 'require(\"./package.json\").version') ."
+    "predocker:build": "npm run build -- --prod",
+    "docker:build": "docker build -t shookas/wms-viewer:$(node -p 'require(\"./package.json\").version') .",
+    "docker:publish": "docker push shookas/wms-viewer:$(node -p 'require(\"./package.json\").version')"
   },
   "private": true,
   "dependencies": {
