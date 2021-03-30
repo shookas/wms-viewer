@@ -53,10 +53,7 @@ export class AuthService {
   }
 
   logout() {
-    this.http
-      .post(this.logoutUrl, {}, { responseType: 'text' })
-      .pipe(finalize(this.removeSession.bind(this)))
-      .subscribe();
+    this.removeSession()
   }
 
   removeSession() {
