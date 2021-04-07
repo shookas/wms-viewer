@@ -23,6 +23,7 @@ import { Subscription } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
 import { Project } from 'src/app/projects/project-card/project.model';
 import { MapService } from '../map.service';
+import { FeatureInfoService } from '../feature-info.service';
 
 @Component({
   selector: 'app-map-container',
@@ -61,8 +62,9 @@ export class MapContainerComponent
     private router: Router,
     private projectsService: ProjectsService,
     private mapService: MapService,
-    private cdRef: ChangeDetectorRef
-  ) {}
+    private cdRef: ChangeDetectorRef,
+    private featureInfoService: FeatureInfoService
+  ) { }
 
   ngOnInit() {
     this.mapService.registerWmsLoader();
@@ -79,6 +81,10 @@ export class MapContainerComponent
       'touchmove',
       this.updateCordsEvent.bind(this)
     );
+    this.mapViewer.addEventListener(
+      'click',
+      this.onMapClick.bind(this)
+    );
   }
 
   ngAfterViewChecked() {
@@ -93,8 +99,24 @@ export class MapContainerComponent
     return Object.values(this.loadingLayers).some(loading => !!loading);
   }
 
+  toggleMapLayers(event: MouseEvent) {
+    event.stopPropagation();
+    this.sideNavOpened = !this.sideNavOpened;
+  }
+
   private updateCordsEvent(event: LeafletMouseEvent) {
     this.latlng = this.mapService.convertDMS(event.latlng);
+  }
+
+  private onMapClick(event: LeafletMouseEvent) {
+    const queryableLayer = this.featureInfoService.queryableLayer(this.mapViewer);
+    if (queryableLayer) {
+      this.projectSubscruption.add(
+        this.featureInfoService.getFeatureInfo<{ [key: string]: string | number }>(event, this.mapViewer, queryableLayer).subscribe(res => {
+          this.featureInfoService.showGetFeatureInfo(res.features[0]?.properties)
+        })
+      )
+    }
   }
 
   private loadProject() {
