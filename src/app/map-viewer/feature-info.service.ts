@@ -1,14 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { LatLng, LeafletMouseEvent, Map, TileLayer } from 'leaflet';
 import { FeatureInfo } from '../models/feature-info.model';
+import { DetailModalComponent } from '../shared/detail-modal/detail-modal.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeatureInfoService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public dialog: MatDialog) { }
 
   getFeatureInfo<P>(evt: LeafletMouseEvent, map: Map, queryableLayer: string) {
     const [projectId] = queryableLayer.split(':');
@@ -50,6 +52,8 @@ export class FeatureInfoService {
   }
 
   showGetFeatureInfo(properties: {[key: string]: string | number}) {
-    console.log(properties);
+    this.dialog.open(DetailModalComponent, {
+      data: properties
+    });
   }
 }

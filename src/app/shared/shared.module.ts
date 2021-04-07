@@ -8,6 +8,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRadioModule } from '@angular/material/radio';
+import { DetailModalComponent } from './detail-modal/detail-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { SpinnerOverlayComponent } from './spinner-overlay/spinner-overlay.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const shared = [
   CommonModule,
@@ -18,12 +23,16 @@ const shared = [
   MatRadioModule,
   FormsModule,
   MatSliderModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDialogModule,
+  MatTableModule,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({
   imports: [...shared],
-  declarations: [],
-  exports: [...shared]
+  declarations: [DetailModalComponent, SpinnerOverlayComponent],
+  entryComponents: [DetailModalComponent],
+  exports: [...shared, DetailModalComponent, SpinnerOverlayComponent]
 })
-export class SharedModule {}
+export class SharedModule { }

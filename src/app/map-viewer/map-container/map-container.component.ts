@@ -56,6 +56,7 @@ export class MapContainerComponent
   projectLayers;
 
   sideNavOpened: boolean;
+  showSpinner = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -111,9 +112,13 @@ export class MapContainerComponent
   private onMapClick(event: LeafletMouseEvent) {
     const queryableLayer = this.featureInfoService.queryableLayer(this.mapViewer);
     if (queryableLayer) {
+      this.showSpinner = true;
       this.projectSubscruption.add(
         this.featureInfoService.getFeatureInfo<{ [key: string]: string | number }>(event, this.mapViewer, queryableLayer).subscribe(res => {
-          this.featureInfoService.showGetFeatureInfo(res.features[0]?.properties)
+          if (res.features.length) {
+            this.featureInfoService.showGetFeatureInfo(res.features[0]?.properties);
+          }
+          this.showSpinner = false;
         })
       )
     }
