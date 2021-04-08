@@ -1,0 +1,13 @@
+.table__value {
+    max-width: 300px;
+}
+
+.table__value > img {
+    width: 100%;
+    height: auto;
+}
+
+table td, tr th{
+    padding: 10px;
+    text-align: center;
+}

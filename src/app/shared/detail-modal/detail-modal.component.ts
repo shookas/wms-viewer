@@ -20,4 +20,9 @@ export class DetailModalComponent implements OnInit {
     this.dataSource = Object.entries(this.data || {}).map(([key, value]) => ({ key, value }))
   }
 
+  isHttpResource(value: string): boolean {
+    const regex = /https?:\/\//
+    return regex.test(value);
+  }
+
 }

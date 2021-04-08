@@ -3,13 +3,16 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
         <ng-container matColumnDef="key">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <th mat-header-cell *matHeaderCellDef> Klucz</th>
             <td mat-cell *matCellDef="let element"> {{element.key}} </td>
         </ng-container>
 
         <ng-container matColumnDef="value">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+            <th mat-header-cell *matHeaderCellDef> Wartość </th>
+            <td class="table__value" mat-cell *matCellDef="let element">
+                <img *ngIf="isHttpResource(element.value)" [src]="element.value">
+                <span *ngIf="!isHttpResource(element.value)"> {{element.value}} </span>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
