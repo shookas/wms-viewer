@@ -5,7 +5,7 @@
     (dragulaModelChange)="onDragulaModelChange($event)">
     <div *ngFor="let layer of projectLayers">
       <div class="layer layer__project">
-        <mat-checkbox (change)="onProjectLayerChange($event, layer[1])">{{layer[0]}}</mat-checkbox>
+        <mat-checkbox (change)="onProjectLayerChange($event, layer[1])">{{trimPrefix(layer[0])}}</mat-checkbox>
         <mat-slider [max]="100"
           [thumbLabel]="true"
           [value]="100"

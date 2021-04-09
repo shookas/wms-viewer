@@ -83,6 +83,10 @@ export class MapLayersComponent implements OnInit, OnDestroy {
     this.dragulaService.destroy(this.dragProjectLayers);
   }
 
+  trimPrefix(name: string) {
+    return name.replace(/^(\d.\.)/,"");
+  }
+
   private setLayersOrder() {
     this.projectLayers.forEach((entry, index, array) => {
       const zIndex = array.length - index + 1;
