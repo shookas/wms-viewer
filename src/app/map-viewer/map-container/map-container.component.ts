@@ -16,7 +16,10 @@ import {
   LeafletEvent,
   LatLngBoundsExpression,
   LeafletMouseEvent,
-  LatLng
+  LocationEvent,
+  circle,
+  layerGroup,
+  LayerGroup
 } from 'leaflet';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -24,6 +27,7 @@ import 'leaflet-measure/dist/leaflet-measure.pl.js';
 import { Project } from 'src/app/projects/project-card/project.model';
 import { MapService } from '../map.service';
 import { FeatureInfoService } from '../feature-info.service';
+import { AccessibilityService } from 'src/app/core/accessibility.service';
 
 @Component({
   selector: 'app-map-container',
@@ -58,13 +62,16 @@ export class MapContainerComponent
   sideNavOpened: boolean;
   showSpinner = false;
 
+  private locationLayer: LayerGroup;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private projectsService: ProjectsService,
     private mapService: MapService,
     private cdRef: ChangeDetectorRef,
-    private featureInfoService: FeatureInfoService
+    private featureInfoService: FeatureInfoService,
+    private accessibilityService: AccessibilityService
   ) { }
 
   ngOnInit() {
@@ -74,6 +81,7 @@ export class MapContainerComponent
 
   ngAfterViewInit() {
     this.prepareMap();
+    this.enableLocationOnMobile();
     this.mapViewer.addEventListener(
       'mousemove',
       this.updateCordsEvent.bind(this)
@@ -85,6 +93,9 @@ export class MapContainerComponent
     this.mapViewer.addEventListener(
       'click',
       this.onMapClick.bind(this)
+    );
+    this.mapViewer.addEventListener('locationfound',
+      this.onLocationEnabled.bind(this)
     );
   }
 
@@ -107,6 +118,20 @@ export class MapContainerComponent
 
   private updateCordsEvent(event: LeafletMouseEvent) {
     this.latlng = this.mapService.convertDMS(event.latlng);
+  }
+
+  private enableLocationOnMobile() {
+    if (this.accessibilityService.isMobile) {
+      this.mapViewer.locate({ setView: true, maxZoom: 16 });
+    }
+  }
+
+  private onLocationEnabled(event: LocationEvent) {
+    const radius = event.accuracy;
+    const position = circle(event.latlng, 2, { color: 'red' });
+    const accuracy = circle(event.latlng, radius);
+    this.locationLayer = layerGroup([position, accuracy])
+    this.mapViewer.addLayer(this.locationLayer)
   }
 
   private onMapClick(event: LeafletMouseEvent) {
