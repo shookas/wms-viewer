@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TileLayer, tileLayer, LatLng } from 'leaflet';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../core/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'

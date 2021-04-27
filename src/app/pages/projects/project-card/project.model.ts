@@ -1,4 +1,4 @@
-import { Layer } from "../../models/wms-capabilities.model";
+import { Layer } from "../../../models/wms-capabilities.model";
 
 export interface Project {
   id: string;

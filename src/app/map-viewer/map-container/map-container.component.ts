@@ -24,7 +24,7 @@ import {
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import 'leaflet-measure/dist/leaflet-measure.pl.js';
-import { Project } from 'src/app/projects/project-card/project.model';
+import { Project } from 'src/app/pages/projects/project-card/project.model';
 import { MapService } from '../map.service';
 import { FeatureInfoService } from '../feature-info.service';
 import { AccessibilityService } from 'src/app/core/accessibility.service';

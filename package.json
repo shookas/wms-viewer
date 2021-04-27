@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:server": "docker run -p 8080:8080 -v $HOME/geoserver_data:/opt/geoserver/data_dir kartoza/geoserver:2.18.2",
+    "start:server": "docker run -p 8080:8080 -v $HOME/geoserver_data:/opt/geoserver/data_dir kartoza/geoserver:2.13.0",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

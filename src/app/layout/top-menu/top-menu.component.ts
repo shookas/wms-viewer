@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { ProjectsService } from '../../core/projects.service';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-menu',
@@ -14,7 +15,8 @@ export class TopMenuComponent implements OnInit, OnDestroy {
   private projectSubscription: Subscription;
   constructor(
     public auth: AuthService,
-    public projectsService: ProjectsService
+    public projectsService: ProjectsService,
+    public router: Router
   ) {}
 
   purgeProject() {

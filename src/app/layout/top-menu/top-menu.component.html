@@ -10,12 +10,18 @@
       *ngIf="auth.isLoggedIn()">Witaj {{ auth.getUserName() }}!</span>
     <button mat-button
       (click)="purgeProject()"
-      [disabled]="!auth.isLoggedIn()"
       [routerLink]="['/projects']">
       <mat-icon>dashboard</mat-icon>
       <span>Projects</span>
     </button>
 
+    <button mat-button
+      *ngIf="!auth.isLoggedIn()"
+      mat-button
+      (click)="router.navigate(['login'])">
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
+    </button>
     <button mat-button
       *ngIf="auth.isLoggedIn()"
       mat-button

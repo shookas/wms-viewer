@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { NotifyService } from '../../core/notify.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
     private authSerive: AuthService,
     private notify: NotifyService,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSubmit() {
     const username = this.loginForm.value.username;
@@ -42,7 +42,10 @@ export class LoginComponent implements OnInit {
     if (username && password) {
       this.authSerive
         .login(username, password)
-        .pipe(catchError(err => of(this.handleErrors(err))))
+        .pipe(catchError(err => {
+          this.handleErrors(err);
+          return of()
+        }))
         .subscribe(() => {
           this.router.navigate(['projects']);
           this.loginForm.reset();

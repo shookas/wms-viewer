@@ -3,7 +3,7 @@ import { WorkspacesResponse } from '../models/api.models';
 import { Observable, forkJoin, Subject, BehaviorSubject } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
-import { Project } from '../projects/project-card/project.model';
+import { Project } from '../pages/projects/project-card/project.model';
 import { IWmsCapablilities } from '../models/wms-capabilities.model';
 import * as WMSCapabilities from 'wms-capabilities';
 
@@ -28,8 +28,8 @@ export class ProjectsService {
   getProjects(): Observable<Project[]> {
     return this.http.get<WorkspacesResponse>(ProjectsService.projectsUrl).pipe(
       map(res => {
-        this.workspaces = res.workspaces.workspace.map(work => work.name);
-        return res.workspaces.workspace;
+        this.workspaces = res.workspaces?.workspace?.map(work => work.name) || [];
+        return res.workspaces?.workspace || [];
       }),
       mergeMap(workspaces =>
         forkJoin(

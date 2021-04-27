@@ -9,9 +9,9 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from './layout/layout.module';
-import { ProjectsModule } from './projects/projects.module';
+import { ProjectsModule } from './pages/projects/projects.module';
 import { AppRouterModule } from './router.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './core/auth/auth.module';
 import { DragulaModule } from 'ng2-dragula';
 import 'hammerjs';
 
